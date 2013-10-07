@@ -15,3 +15,5 @@ Prohibitively expensive could mean that the object's creation workflow is too in
 
 Scenario
 --------
+
+Similar to the Factory Method, we want to delegate the creation of a particular object type to the consumer.  Instead of using a factory, and because we know there will be a large set of these objects the might have wired dependencies, this particular extension point will use prototypical object creation: the prototype pattern.
