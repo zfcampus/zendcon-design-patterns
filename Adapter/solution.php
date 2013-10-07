@@ -14,7 +14,7 @@ namespace MyCompanyShop {
 
         public function transfer($email, $amount)
         {
-            return true;
+            return "Paypal Success!";
         }
 
     }
@@ -32,12 +32,16 @@ namespace MyCompanyShop {
 
         public function authorizeTransaction($amount)
         {
-            return true;
+            return "Authorization code: 234da";
         }
     }
 
     interface PaymentAdapterInterface
     {
+        /**
+         * @param $amount
+         * @return boolean
+         */
         public function collectMoney($amount);
     }
 
@@ -52,7 +56,8 @@ namespace MyCompanyShop {
 
         public function collectMoney($amount)
         {
-            $this->creditCard->authorizeTransaction($amount);
+            $result = $this->creditCard->authorizeTransaction($amount);
+            return strpos($result, 'Authorization') === 0;
         }
     }
 
@@ -67,7 +72,8 @@ namespace MyCompanyShop {
 
         public function collectMoney($amount)
         {
-            $this->paypal->transfer('payments@myshop.com', $amount);
+            $result = $this->paypal->transfer('payments@myshop.com', $amount);
+            return  ($result === 'Paypal Success!');
         }
     }
 }
@@ -75,10 +81,16 @@ namespace MyCompanyShop {
 namespace {
     use MyCompanyShop\PayPal,
         MyCompanyShop\PayPalAdapter,
-        MyCompanyShop\PaymentAdapterInterface,
         MyCompanyShop\CrediCardAdapter,
         MyCompanyShop\CreditCard;
 
+        $paypal = new PayPal('customer@aol.com', 'password');
+        $cc = new CreditCard(1234567890123456, "09/12");
 
+        $paypalAdapter = new PayPalAdapter($paypal);
+        $ccAdapter = new CrediCardAdapter($cc);
+
+        assert($paypalAdapter->collectMoney(50));
+        assert($ccAdapter->collectMoney(50));
 
 }
