@@ -11,4 +11,4 @@ This pattern is often used in sorting and filtering scenarios. It may also be us
 Scenario
 --------
 
-You have a collection of business objects that represent items for sale in a shopping cart system. You may want to allow users to sort them in the view layer by various different criteria, depending on their tastes.
+You have a collection of business objects that represent items for sale in a shopping cart system. You may want to allow users to narrow results in the view layer by various different criteria, depending on their tastes.

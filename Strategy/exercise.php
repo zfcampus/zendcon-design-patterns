@@ -33,7 +33,7 @@ namespace MyCompanyShop {
     interface ProductFilteringStrategy {
         /**
          * @param Product $product
-         * @return Product|false
+         * @return true|false
          */
         public function filter(Product $product);
     }
@@ -59,13 +59,13 @@ namespace {
 
     $collection = new ProductCollection([$p1, $p2]);
 
-    //@TODO filter $collection to exclude products from $widgetron
+    $resultCollection = $collection->filter(new ManufacturerFilter('Widgetron, LLC'));
 
     assert(count($resultCollection->getProductsArray()) == 1);
     assert($resultCollection->getProductsArray()[0]->manufacturer == 'WidgetCorp');
 
 
-    //@TODO filter the collection to exclude products with a price greater than $50
+    $resultCollection = $collection->filter(new MaxPriceFilter(50));
 
     assert(count($resultCollection->getProductsArray()) == 1);
     assert($resultCollection->getProductsArray()[0]->manufacturer == 'WidgetCorp');
