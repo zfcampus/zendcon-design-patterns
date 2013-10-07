@@ -62,7 +62,7 @@ namespace {
     $resultCollection = $collection->filter(new ManufacturerFilter('Widgetron, LLC'));
 
     assert(count($resultCollection->getProductsArray()) == 1);
-    assert($resultCollection->getProductsArray()[0]->manufacturer == 'WidgetCorp');
+    assert($resultCollection->getProductsArray()[0]->manufacturer == 'Widgetron, LLC');
 
 
     $resultCollection = $collection->filter(new MaxPriceFilter(50));
