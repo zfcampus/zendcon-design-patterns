@@ -1,9 +1,6 @@
 Strategy
 ================
 
-Definition
-----------
-
 The strategy pattern is essentially a system for for pluggable logic, designed to be easily switched out giving varying implementations of the same task.
 
 This pattern is often used in sorting and filtering scenarios. It may also be used for data storage / persistance, and in a more concrete definition, adapters.

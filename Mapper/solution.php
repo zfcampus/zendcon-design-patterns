@@ -16,7 +16,27 @@ namespace MyCompanyShop {
 
     class ProductMapper
     {
-        //@TODO
+        public function toProduct($data)
+        {
+            $p = new Product;
+            $p->name = $data["name"];
+            $p->price = $data["price"];
+            $p->manufacturer = new Manufacturer;
+            $p->manufacturer->name = $data["manufacturer_name"];
+            $p->manufacturer->url = $data["manufacturer_url"];
+            return $p;
+        }
+
+        public function toArray(Product $product)
+        {
+            $data = [];
+            $data["price"] = $product->price;
+            $data["name"] = $product->name;
+            $data["manufacturer_name"] = $product->manufacturer->name;
+            $data["manufacturer_url"] = $product->manufacturer->url;
+
+            return $data;
+        }
     }
 }
 
@@ -44,5 +64,5 @@ namespace {
     assert($product->manufacturer->url == "http://widgets.io");
 
     $mappedData = $mapper->toArray($product);
-    assert($data === $mappedData);
+    assert($data == $mappedData);
 }
