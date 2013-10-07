@@ -27,39 +27,30 @@ namespace ShopingCartFramework {
 namespace MyCompanyShop {
     use ShopingCartFramework\ProductFactoryInterface;
     use ShopingCartFramework\ProductInterface;
-    class MyShopProductFactory implements ProductFactoryInterface {
-        public function createProduct($productCode) {
-            $database = [
-                'BumperSticker1' => 'Cool bumper sticker',
-                'CoffeeTableBook5' => 'Coffee Table book',
-            ];
-            return new MyShopProduct(
-                $productCode, $database[$productCode]
-            );
-        }
-    }
-    class MyShopProduct implements ProductInterface {
-        protected $code, $description;
-        public function __construct($code, $description) {
-            $this->code = $code;
-            $this->description = $description;
-        }
-        public function getShopProductCode() {
-            return $this->code;
-        }
-        public function getShopDescription() {
-            return $this->description;
-        }
-    }
-    
+
+    // @TODO implement MyShopProductFactory with internal database of:
+    //        $database = [
+    //            'BumperSticker1' => 'Cool bumper sticker',
+    //            'CoffeeTableBook5' => 'Coffee Table book',
+    //        ];
+
+
+
+    // @TODO implement MyShopProduct
+
 }
 
 namespace {
     use ShopingCartFramework\Shop;
     use MyCompanyShop\MyShopProductFactory;
     $shop = new Shop(new MyShopProductFactory);
-    
+
     $productsToList = ['BumperSticker1', 'CoffeeTableBook5'];
-    header('content-type: plain/text');
-    echo $shop->listProducts($productsToList); // simulation of Shopping Cart Listings Page
+
+    $targetOutput = <<<EOS
+BumperSticker1 - Cool bumper sticker
+CoffeeTableBook5 - Coffee Table book
+EOS;
+
+    assert($targetOutput == $shop->listProducts($productsToList));
 }
