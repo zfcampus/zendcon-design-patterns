@@ -1,6 +1,6 @@
 <?php
 /**
- * Complete the exercise for the Decorator design pattern
+ * Decorator design pattern (example of implementation)
  * 
  * @see    http://en.wikipedia.org/wiki/Decorator_pattern
  * @see    http://www.giorgiosironi.com/2010/01/practical-php-patterns-decorator.html
@@ -29,8 +29,15 @@ class InputText implements HtmlElement
 abstract class HtmlDecorator implements HtmlElement
 {
     protected $element;
-
-    // @todo here the code to implement
+    public function __construct(HtmlElement $input) {
+        $this->element = $input;
+    }
+    public function getName() {
+        return $this->element->getName();
+    }
+    public function __toString() {
+        return $this->element->__toString();
+    }
 }
 
 class LabelDecorator extends HtmlDecorator

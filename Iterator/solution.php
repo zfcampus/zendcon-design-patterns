@@ -21,13 +21,21 @@ class Fibonacci implements Iterator {
         return $this->key;
     }
     public function next() {
-        // @todo here the code to implement
+        if ($this->value === 0) {
+            $this->value = 1;
+        } else {
+            $old = $this->value;
+            $this->value += $this->sum;
+            $this->sum = $old;
+        }
+        $this->key++;
     }
     
     public function valid() {
         return true;
     }
 }
+
 
 // check the first 10 Fibonacci's numbers
 $num = new Fibonacci();

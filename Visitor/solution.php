@@ -68,7 +68,19 @@ interface Visitor
  */
 class IntFilter implements Visitor
 {
-    // @todo here the code to implement
+    public function visitSingleInputValue(SingleInputValue $inputValue)
+    {
+        $inputValue->set((int) $inputValue->get());
+    }
+
+    public function visitMultipleInputValue(MultipleInputValue $inputValue)
+    {
+        $newValues = array();
+        foreach ($inputValue->get() as $index => $value) {
+            $newValues[$index] = (int) $value;
+        }
+        $inputValue->set($newValues);
+    }
 }
 
 /**
@@ -77,7 +89,20 @@ class IntFilter implements Visitor
  */
 class AscendingSort implements Visitor
 {
-    // @todo here the code to implement
+    /**
+     * Do nothing. This part is equivalent to a Null Object,
+     * which leverages polymorphism to achieve more concise code.
+     */
+    public function visitSingleInputValue(SingleInputValue $inputValue)
+    {
+    }
+
+    public function visitMultipleInputValue(MultipleInputValue $inputValue)
+    {
+        $values = $inputValue->get();
+        asort($values);
+        $inputValue->set($values);
+    }
 }
 
 $userId = new SingleInputValue("42");
