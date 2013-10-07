@@ -8,7 +8,7 @@ namespace MyShop {
         }
     }
     
-    class DatabaseConsumer {
+    class DatabaseConstructorConsumer {
         protected $database;
         public function __construct(Database $database) {
             $this->database = $database;
@@ -18,14 +18,31 @@ namespace MyShop {
         }
     }
     
+    class DatabaseSetterConsumer {
+        protected $database;
+        public function setDatabase(Database $database) {
+            $this->database = $database;
+        }
+        public function doSomething() {
+            return implode(', ', $this->database->query());
+        }
+    }
+
 }
 
 namespace {
     
     use MyShop\Database;
-    use MyShop\DatabaseConsumer;
+    use MyShop\DatabaseConstructorConsumer;
+    use MyShop\DatabaseSetterConsumer;
+
+    // constructor injection
+    $consumer = new DatabaseConstructorConsumer(new MyShop\Database);
+    assert($consumer->doSomething() == '1, 2, 3');
     
-    $consumer = new DatabaseConsumer(new MyShop\Database);
-    echo $consumer->doSomething();
+    // setter injection
+    $consumer = new DatabaseSetterConsumer;
+    $consumer->setDatabase(new MyShop\Database);
+    assert($consumer->doSomething() == '1, 2, 3');
     
 }
