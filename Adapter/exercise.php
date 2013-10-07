@@ -52,7 +52,7 @@ namespace MyCompanyShop {
 
     class PayPalAdapter implements PaymentAdapterInterface
     {
-       
+
     }
 }
 
