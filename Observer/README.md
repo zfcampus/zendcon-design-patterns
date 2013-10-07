@@ -1,7 +1,9 @@
-Proxy
+Observer
 =====
 
-A proxy is an object that implements the same interface as another type of object and can be used in place of it for various reasons.
+The observer pattern is used to promote loose coupling between objects. "Subjects" may be subscribed to by "Observers", such that hanges to the subject trigger a notification to one or more observers. Usually, the observers are passed the entire subject as context.
 
-A proxy can be used, among other things to delay the computation cost of loading expensive objects into memory, add security measures, and anythign else which requires intercepting commands before they reach the desired object.
+Scenario
+--------
 
+A data model may be changed from various different points in the code. You want to implement a logger that keeps track of when the model changes.
