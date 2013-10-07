@@ -8,27 +8,38 @@ namespace MyCompanyShop {
     }
 
     class ProductCollection {
+
         private $products = array();
 
-        public function addProduct($product) {
-            $this->products[] = $product;
+        public function __construct(array $products) {
+            $this->products = $products;
         }
 
-        public function sort(ProductSortingStrategy $strategy) {
-            $this->products = $strategy->sort($this->products);
+        /**
+         * @param ProductFilteringStrategy $filterStrategy
+         * @return ProductCollection
+         */
+        public function filter(ProductFilteringStrategy $filterStrategy) {
+            $filteredProducts = array();
+            //@TODO use the strategy to filter products that don't meet criteria
+            return new ProductCollection($filteredProducts);
         }
 
-        public function getStorage() {
+        public function getProductsArray() {
             return $this->products;
         }
     }
 
-    interface ProductSortingStrategy {
-        public function sort(array $products);
+    interface ProductFilteringStrategy {
+        /**
+         * @param Product $product
+         * @return Product|false
+         */
+        public function filter(Product $product);
     }
 
-    // implement a strategy to sort by name ascending alphabetically
-    // implement a strategy to sort by discount percent descending
+    //@TODO implement a strategy for filtering products by maximum price
+    //@TODO implement a strategy for filtering products by manufacturer
 
 }
 
@@ -40,24 +51,23 @@ namespace {
     $p1 = new Product;
     $p1->listPrice = 100;
     $p1->sellingPrice = 50;
-    $p1->name = "Some other Product";
+    $p1->manufacturer = 'WidgetCorp';
 
     $p2 = new Product;
     $p2->listPrice = 100;
-    $p2->sellingPrice = 75;
-    $p2->name = "My Favorite Product";
+    $p2->manufacturer = 'Widgetron, LLC';
 
-    $collection = new ProductCollection;
-    $collection->addProduct($p1);
-    $collection->addProduct($p2);
+    $collection = new ProductCollection([$p1, $p2]);
 
-    // sort the collection by name
+    //@TODO filter $collection to exclude products from $widgetron
 
-    assert($collection->getStorage()[0]->name == $p2->name);
+    assert(count($resultCollection->getProductsArray()) == 1);
+    assert($resultCollection->getProductsArray()[0]->manufacturer == 'WidgetCorp');
 
-    // sort the collection by discount percent
 
-    assert($collection->getStorage()[0]->sellingPrice == $p1->sellingPrice);
+    //@TODO filter the collection to exclude products with a price greater than $50
 
+    assert(count($resultCollection->getProductsArray()) == 1);
+    assert($resultCollection->getProductsArray()[0]->manufacturer == 'WidgetCorp');
 
 }
